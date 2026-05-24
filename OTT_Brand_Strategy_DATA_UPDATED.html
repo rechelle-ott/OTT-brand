@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Over The Top XP — Brand Strategy 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --gold: #B8963E;
+    --gold-light: #D4A843;
+    --gold-pale: #FAF3E0;
+    --dark: #0F0F0F;
+    --dark2: #1A1A1A;
+    --mid: #2A2A2A;
+    --gray: #555;
+    --light: #F5F5F5;
+    --white: #FFFFFF;
+    --green: #2D6A4F;
+    --green-light: #D4EDDA;
+    --amber: #856404;
+    --amber-light: #FFF3CD;
+    --blue: #0C5460;
+    --blue-light: #D1ECF1;
+    --red: #721c24;
+    --red-light: #F8D7DA;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,15,15,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(184,150,62,0.3);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 0;
+    overflow-x: auto;
+  }
+  nav .logo {
+    font-weight: 800; font-size: 1rem; color: var(--gold);
+    white-space: nowrap; padding: 1rem 1.5rem 1rem 0;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    margin-right: 1rem; letter-spacing: 1px;
+  }
+  nav a {
+    color: rgba(255,255,255,0.6); text-decoration: none;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;
+    padding: 1.1rem 1rem; white-space: nowrap;
+    transition: color 0.2s;
+    text-transform: uppercase;
+  }
+  nav a:hover, nav a.active { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0F0F0F 0%, #1A1410 50%, #0F0F0F 100%);
+    border-bottom: 1px solid rgba(184,150,62,0.2);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(184,150,62,0.08) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(184,150,62,0.15);
+    border: 1px solid rgba(184,150,62,0.4);
+    color: var(--gold); font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 0.4rem 1.2rem; border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900; letter-spacing: -1px;
+    line-height: 1.1; margin-bottom: 1rem;
+    background: linear-gradient(135deg, #FFFFFF 0%, var(--gold) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 1.15rem; color: rgba(255,255,255,0.6);
+    max-width: 620px; margin: 0 auto 2.5rem;
+  }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-size: 2.2rem; font-weight: 900; color: var(--gold);
+    display: block; line-height: 1;
+  }
+  .hero-stat .lbl {
+    font-size: 0.75rem; color: rgba(255,255,255,0.5);
+    text-transform: uppercase; letter-spacing: 1px;
+    display: block; margin-top: 0.3rem;
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .section-label span {
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, rgba(184,150,62,0.4), transparent);
+  }
+  h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 800; margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .section-intro {
+    color: rgba(255,255,255,0.6); font-size: 1.05rem;
+    max-width: 700px; margin-bottom: 3rem;
+  }
+
+  /* CARDS GRID */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+
+  .card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .card:hover { transform: translateY(-3px); border-color: rgba(184,150,62,0.3); }
+  .card-icon {
+    width: 48px; height: 48px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 1rem;
+    background: rgba(184,150,62,0.1);
+  }
+  .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--white); }
+  .card p { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* SWOT */
+  .swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 700px) { .swot-grid { grid-template-columns: 1fr; } }
+  .swot-q {
+    border-radius: var(--radius);
+    padding: 2rem; border: 1px solid rgba(255,255,255,0.08);
+  }
+  .swot-q.s { background: rgba(45,106,79,0.12); border-color: rgba(45,106,79,0.3); }
+  .swot-q.w { background: rgba(133,100,4,0.12); border-color: rgba(133,100,4,0.3); }
+  .swot-q.o { background: rgba(12,84,96,0.12); border-color: rgba(12,84,96,0.3); }
+  .swot-q.t { background: rgba(114,28,36,0.12); border-color: rgba(114,28,36,0.3); }
+  .swot-q h3 {
+    font-size: 0.8rem; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .swot-q.s h3 { color: #5cb85c; }
+  .swot-q.w h3 { color: #f0ad4e; }
+  .swot-q.o h3 { color: #5bc0de; }
+  .swot-q.t h3 { color: #d9534f; }
+  .swot-q ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .swot-q li {
+    font-size: 0.88rem; color: rgba(255,255,255,0.7);
+    padding-left: 1.1rem; position: relative; line-height: 1.5;
+  }
+  .swot-q li::before { content: '→'; position: absolute; left: 0; color: rgba(255,255,255,0.3); font-size: 0.75rem; top: 2px; }
+
+  /* PILLARS TABLE */
+  .pillars-table { width: 100%; border-collapse: collapse; }
+  .pillars-table th {
+    text-align: left; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .pillars-table td {
+    padding: 1rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.9rem; color: rgba(255,255,255,0.8);
+    vertical-align: top;
+  }
+  .pillars-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .pillar-name { font-weight: 700; color: var(--white); font-size: 0.95rem; }
+  .pillar-sub { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 0.2rem; }
+
+  .badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    padding: 0.25rem 0.7rem; border-radius: 100px;
+    letter-spacing: 0.5px;
+  }
+  .badge-strong { background: rgba(45,106,79,0.25); color: #6fcf97; border: 1px solid rgba(45,106,79,0.4); }
+  .badge-growing { background: rgba(12,84,96,0.25); color: #56CCF2; border: 1px solid rgba(12,84,96,0.4); }
+  .badge-emerging { background: rgba(133,100,4,0.25); color: #F2C94C; border: 1px solid rgba(133,100,4,0.4); }
+  .badge-weak { background: rgba(114,28,36,0.25); color: #EB5757; border: 1px solid rgba(114,28,36,0.4); }
+  .badge-premium { background: rgba(184,150,62,0.2); color: var(--gold-light); border: 1px solid rgba(184,150,62,0.4); }
+
+  /* COMPETITOR SECTION */
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+  .comp-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .comp-card:hover { transform: translateY(-3px); }
+  .comp-card .comp-tag {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+  }
+  .comp-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.25rem; }
+  .comp-card .comp-sub { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-bottom: 1rem; }
+  .comp-stat-row { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .comp-stat { text-align: center; }
+  .comp-stat .v { font-size: 1.1rem; font-weight: 800; color: var(--gold); }
+  .comp-stat .k { font-size: 0.68rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; }
+  .comp-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .pill {
+    font-size: 0.68rem; padding: 0.2rem 0.6rem;
+    border-radius: 100px; background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.6);
+  }
+  .comp-insight { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+  .comp-insight strong { color: var(--gold); }
+  .threat-high { border-color: rgba(114,28,36,0.4); }
+  .threat-med { border-color: rgba(133,100,4,0.4); }
+  .threat-low { border-color: rgba(45,106,79,0.3); }
+  .tag-high { background: rgba(114,28,36,0.3); color: #EB5757; }
+  .tag-med { background: rgba(133,100,4,0.3); color: #F2C94C; }
+  .tag-low { background: rgba(45,106,79,0.3); color: #6fcf97; }
+
+  /* RADAR CHART */
+  .chart-wrap {
+    background: var(--dark2); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius); padding: 2rem;
+    display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;
+  }
+  .chart-canvas-wrap { flex: 0 0 auto; width: 380px; max-width: 100%; }
+  .chart-legend { flex: 1; min-width: 200px; }
+  .legend-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .legend-label { font-size: 0.85rem; color: rgba(255,255,255,0.7); font-weight: 600; }
+  .legend-sub { font-size: 0.75rem; color: rgba(255,255,255,0.35); }
+
+  /* VISIBILITY / RECS */
+  .recs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+  .rec-card {
+    background: var(--dark2); border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 1.75rem; position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .rec-card:hover { transform: translateY(-2px); border-color: rgba(184,150,62,0.25); }
+  .rec-num {
+    position: absolute; top: -14px; left: 1.5rem;
+    background: var(--gold); color: var(--dark);
+    font-size: 0.7rem; font-weight: 900; letter-spacing: 1px;
+    padding: 0.2rem 0.75rem; border-radius: 100px;
+  }
+  .rec-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; margin-top: 0.5rem; }
+  .rec-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .rec-card li { font-size: 0.85rem; color: rgba(255,255,255,0.6); padding-left: 1rem; position: relative; }
+  .rec-card li::before { content: '•'; position: absolute; left: 0; color: var(--gold); }
+
+  /* MERCH */
+  .merch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
+  .merch-item {
+    background: var(--dark2); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius); padding: 1.5rem; text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .merch-item:hover { transform: translateY(-3px); border-color: rgba(184,150,62,0.3); }
+  .merch-icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+  .merch-item h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .merch-item p { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+  .merch-price {
+    display: inline-block; margin-top: 0.75rem;
+    background: rgba(184,150,62,0.15); border: 1px solid rgba(184,150,62,0.3);
+    color: var(--gold); font-size: 0.72rem; font-weight: 700;
+    padding: 0.2rem 0.7rem; border-radius: 100px;
+  }
+
+  /* ROADMAP */
+  .roadmap { position: relative; padding-left: 2rem; }
+  .roadmap::before {
+    content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--gold), rgba(184,150,62,0.1));
+  }
+  .roadmap-item { position: relative; margin-bottom: 2rem; padding-left: 1.5rem; }
+  .roadmap-item::before {
+    content: ''; position: absolute; left: -1.7rem; top: 6px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--gold); border: 3px solid var(--dark);
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .roadmap-label {
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;
+  }
+  .roadmap-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .roadmap-item p { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+
+  /* BAR CHART */
+  .bar-chart { display: flex; flex-direction: column; gap: 0.75rem; }
+  .bar-row { display: flex; align-items: center; gap: 1rem; }
+  .bar-label { font-size: 0.82rem; color: rgba(255,255,255,0.7); width: 140px; flex-shrink: 0; text-align: right; }
+  .bar-track {
+    flex: 1; height: 24px; background: rgba(255,255,255,0.07);
+    border-radius: 100px; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 100px;
+    display: flex; align-items: center; padding-left: 0.75rem;
+    font-size: 0.72rem; font-weight: 700; color: var(--dark);
+    transition: width 1.5s ease;
+  }
+  .bar-ott { background: linear-gradient(90deg, var(--gold), #D4A843); }
+  .bar-comp { background: rgba(255,255,255,0.25); }
+  .bar-val { font-size: 0.78rem; color: rgba(255,255,255,0.4); width: 40px; flex-shrink: 0; }
+
+  /* COMPARISON TABLE */
+  .comp-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .comp-table th {
+    padding: 0.8rem 1rem; text-align: center;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .comp-table th:first-child { text-align: left; }
+  .comp-table td {
+    padding: 0.9rem 1rem; text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.7);
+  }
+  .comp-table td:first-child { text-align: left; font-weight: 600; color: rgba(255,255,255,0.9); }
+  .comp-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .comp-table .ott-col { color: var(--gold) !important; font-weight: 700; }
+  .check { color: #6fcf97; }
+  .cross { color: #EB5757; }
+  .partial { color: #F2C94C; }
+
+  /* PRIORITY MATRIX */
+  .priority-list { display: flex; flex-direction: column; gap: 1rem; }
+  .priority-item {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    background: var(--dark2); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius); padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .priority-item:hover { border-color: rgba(184,150,62,0.2); }
+  .priority-badge-wrap { flex-shrink: 0; }
+  .p-badge {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 900;
+  }
+  .p1 { background: rgba(235,87,87,0.2); color: #EB5757; border: 1px solid rgba(235,87,87,0.3); }
+  .p2 { background: rgba(242,201,76,0.2); color: #F2C94C; border: 1px solid rgba(242,201,76,0.3); }
+  .p3 { background: rgba(111,207,151,0.2); color: #6fcf97; border: 1px solid rgba(111,207,151,0.3); }
+  .priority-content { flex: 1; }
+  .priority-content h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .priority-content p { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+  .priority-meta { flex-shrink: 0; text-align: right; }
+  .priority-meta .timeline { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-bottom: 0.3rem; }
+  .priority-meta .impact {
+    font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.5rem;
+    border-radius: 100px; letter-spacing: 0.5px;
+  }
+  .impact-high { background: rgba(45,106,79,0.25); color: #6fcf97; }
+  .impact-med { background: rgba(133,100,4,0.25); color: #F2C94C; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark2);
+    border-top: 1px solid rgba(184,150,62,0.2);
+    text-align: center; padding: 3rem 2rem;
+  }
+  footer p { color: rgba(255,255,255,0.35); font-size: 0.82rem; }
+  footer .footer-brand { color: var(--gold); font-weight: 800; font-size: 1rem; margin-bottom: 0.5rem; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(184,150,62,0.2), transparent);
+    margin: 0;
+  }
+
+  /* CHART SECTION FULL */
+  .chart-section {
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .chart-section section { padding: 5rem 2rem; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero-stats { gap: 1.5rem; }
+    .chart-canvas-wrap { width: 100%; }
+    .bar-label { width: 90px; font-size: 0.75rem; }
+    .comp-table { font-size: 0.78rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">OTT XP</div>
+  <a href="#pillars">Pillars</a>
+  <a href="#swot">SWOT</a>
+  <a href="#competitors">Competitors</a>
+  <a href="#visibility">Visibility</a>
+  <a href="#data">Data</a>
+  <a href="#merch">Merch</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#priorities">Priorities</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Brand Strategy Report · May 2026</div>
+  <h1>Over The Top XP</h1>
+  <p>A strategic analysis of content pillars, competitive positioning, brand visibility, and growth recommendations for the Bay Area's premier young professional community brand.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">7</span><span class="lbl">Years Built</span></div>
+    <div class="hero-stat"><span class="num">11K</span><span class="lbl">IG Followers</span></div>
+    <div class="hero-stat"><span class="num">6</span><span class="lbl">Brand Pillars</span></div>
+    <div class="hero-stat"><span class="num">$218K</span><span class="lbl">Lifetime Revenue</span></div>
+    <div class="hero-stat"><span class="num">4,901</span><span class="lbl">Lifetime Tickets</span></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PILLARS -->
+<section id="pillars">
+  <div class="section-label"><span>Brand Pillars</span></div>
+  <h2>What OTT Actually Does — Rebuilt as a Growth System</h2>
+  <p class="section-intro">The old version mixed pillars, individual events, and tactics together. This version separates <strong>brand categories</strong> from <strong>event IP</strong>, so the strategy can actually guide programming, content, sponsorship, and membership growth.</p>
+
+  <table class="pillars-table">
+    <thead>
+      <tr>
+        <th>Brand Pillar</th>
+        <th>Purpose</th>
+        <th>Events / IP Inside</th>
+        <th>Status</th>
+        <th>Growth Move</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="pillar-name">🥂 Luxury Social Experiences</div><div class="pillar-sub">Premium culture, connection, music, nightlife/daylife</div></td>
+        <td>Build brand heat, cultural relevance, and sponsor appeal.</td>
+        <td><strong>The Blend</strong>, Yacht Parties, NOIR, Galas, Home By Five</td>
+        <td><span class="badge badge-strong">CORE ENGINE</span></td>
+        <td>The Blend should be treated as OTT's flagship IP, not a standalone pillar. Scale it by city, playlist, sponsor package, and recap content.</td>
+      </tr>
+      <tr>
+        <td><div class="pillar-name">🏋️ Wellness & Movement</div><div class="pillar-sub">Fitness, recovery, movement, active lifestyle</div></td>
+        <td>Bring in health-conscious professionals and brand partners.</td>
+        <td>SF Fit Fest, pickleball, tennis, run/walk concepts, recovery activations</td>
+        <td><span class="badge badge-growing">GROWING</span></td>
+        <td>Fit Fest cannot carry wellness alone. Add smaller monthly movement touchpoints to compete with weekly wellness communities.</td>
+      </tr>
+      <tr>
+        <td><div class="pillar-name">🍳 Professional Development & Workshops</div><div class="pillar-sub">Career, founders, money, leadership, creator/business skills</div></td>
+        <td>Differentiate OTT from pure party brands and build higher-value sponsorship inventory.</td>
+        <td>Brunch & Build, fireside chats, founder brunches, creator workshops, money/career sessions</td>
+        <td><span class="badge badge-emerging">NEEDS CADENCE</span></td>
+        <td>Group Brunch & Build here. Make it quarterly, record everything, and turn every event into clips, newsletter content, and sponsor proof.</td>
+      </tr>
+      <tr>
+        <td><div class="pillar-name">✈️ Travel & Destination Experiences</div><div class="pillar-sub">Aspirational trips and destination community moments</div></td>
+        <td>Create premium desire, member loyalty, and high-margin experiences.</td>
+        <td>Annual Tahoe Ski Weekend, past international trips, future destination drops</td>
+        <td><span class="badge badge-premium">PREMIUM MOAT</span></td>
+        <td>Travel is one of OTT's strongest differentiators but is under-amplified. Every trip needs a content plan: teaser, vlog, recap, guide, testimonials.</td>
+      </tr>
+      <tr>
+        <td><div class="pillar-name">💎 Membership & Community</div><div class="pillar-sub">Retention, belonging, perks, year-round value</div></td>
+        <td>Convert one-time attendees into repeat buyers, advocates, and predictable revenue.</td>
+        <td>Member Lounge, free/priority entry, VIP access, member-only drops, trip perks</td>
+        <td><span class="badge badge-emerging">UNDERBUILT</span></td>
+        <td>Use the attached membership plan as the foundation, but make benefits measurable and visible: entry value, lounge access, guest passes, perks, and referral rewards.</td>
+      </tr>
+      <tr style="background: rgba(184,150,62,0.05); border: 1px dashed rgba(184,150,62,0.3);">
+        <td><div class="pillar-name" style="color: var(--gold);">📱 Digital Media & Owned Audience</div><div class="pillar-sub" style="color: rgba(184,150,62,0.6);">Newsletter, YouTube, playlists, dashboard, community platform</div></td>
+        <td>Grow beyond Instagram and make OTT visible between events.</td>
+        <td>The OTT Edit, Blend playlists, YouTube recaps, TikTok/IG clips, GitHub/Vercel dashboard</td>
+        <td><span class="badge badge-weak">MISSING</span></td>
+        <td>This is the biggest growth unlock. Without owned media, OTT is too dependent on the algorithm and event-by-event promo cycles.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- SWOT -->
+<section id="swot">
+  <div class="section-label"><span>SWOT Analysis</span></div>
+  <h2>Brand Position at a Glance</h2>
+  <p class="section-intro">A four-quadrant view of where OTT stands today — and the forces shaping its path forward.</p>
+  <div class="swot-grid">
+    <div class="swot-q s">
+      <h3>✅ Strengths</h3>
+      <ul>
+        <li>7 years of authentic community trust — rare in events</li>
+        <li>Premium brand identity: luxury, elevated, curated</li>
+        <li>Monthly recurring touchpoint (The Blend)</li>
+        <li>Strong partner roster: Rivian, Red Bull, Belvedere, Maker's Mark</li>
+        <li>Cultural specificity (BIPOC YP identity) is a moat</li>
+        <li>Destination travel sets OTT apart from all local competitors</li>
+        <li>Membership infrastructure already exists</li>
+        <li>Track record: Vegas gala, yacht parties, global trips</li>
+      </ul>
+    </div>
+    <div class="swot-q w">
+      <h3>⚠️ Weaknesses</h3>
+      <ul>
+        <li>11K Instagram followers after 7 years is under-indexed</li>
+        <li>No YouTube channel; events not amplified digitally</li>
+        <li>Membership page has no pricing, tiers, or benefits</li>
+        <li>Zero digital content between events</li>
+        <li>No community platform (Discord, app, Slack)</li>
+        <li>Professional development/workshops are promising but need a real cadence and content engine</li>
+        <li>Single-market (Bay Area) limits scale ceiling</li>
+        <li>Instagram-only strategy = algorithmic risk</li>
+      </ul>
+    </div>
+    <div class="swot-q o">
+      <h3>⬆️ Opportunities</h3>
+      <ul>
+        <li>Expand The Blend to LA and NYC — proven, scalable format</li>
+        <li>Launch tiered membership with real pricing + benefits</li>
+        <li>Build email newsletter + YouTube + podcast owned channels</li>
+        <li>Grow Fit Fest into a multi-day wellness festival</li>
+        <li>Develop Brunch & Build into a professional-development media + event series</li>
+        <li>Turn Tahoe + international travel into premium storytelling and member acquisition assets</li>
+        <li>Corporate DEI/ERG partnerships for Brunch & Build</li>
+        <li>Merch as brand visibility + revenue stream</li>
+        <li>74% of Fortune 1000 marketers increasing experiential budgets</li>
+      </ul>
+    </div>
+    <div class="swot-q t">
+      <h3>▼ Threats</h3>
+      <ul>
+        <li>Toasted Life (founded 2013) — older, multi-city, Forbes-covered</li>
+        <li>Town Strides — free, viral, weekly, massive growth since 2024</li>
+        <li>Tribe Collective — social club/community model for young Black professionals in SF; a closer community competitor than a pure event competitor</li>
+        <li>Instagram algorithm reducing organic event discovery</li>
+        <li>Free competitors (YPOSF, 8K+ members) capturing top of funnel</li>
+        <li>Rising venue costs squeezing luxury event margins</li>
+        <li>Failure to activate membership before a funded competitor does</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPETITORS -->
+<section id="competitors">
+  <div class="section-label"><span>Competitive Landscape</span></div>
+  <h2>Know the Competition — Corrected & Categorized</h2>
+  <p class="section-intro">The competitor set is not one-size-fits-all. Each brand competes with a different part of OTT: social discovery, luxury events, wellness, travel, membership, or professional connection. This section separates threat type from follower count so the strategy stays honest.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card threat-high">
+      <span class="comp-tag tag-high">HIGH THREAT</span>
+      <h3>Toasted Life</h3>
+      <div class="comp-sub">Social + professional experiences · SF/Oakland/Chicago/LA · Founded 2013</div>
+      <div class="comp-stat-row"><div class="comp-stat"><div class="v">2013</div><div class="k">Founded</div></div><div class="comp-stat"><div class="v">4</div><div class="k">Markets</div></div><div class="comp-stat"><div class="v">Media</div><div class="k">Layer</div></div></div>
+      <div class="comp-pills"><span class="pill">Social Events</span><span class="pill">Professional Networking</span><span class="pill">Lifestyle</span><span class="pill">Partnerships</span></div>
+      <div class="comp-insight"><strong>Most similar full-stack competitor.</strong> Toasted Life has the clearest overlap with OTT's luxury social and professional networking lanes. OTT should not try to copy them; it should out-position them through stronger premium aesthetics, The Blend as flagship IP, travel, and sharper membership value.</div>
+    </div>
+
+    <div class="comp-card threat-high">
+      <span class="comp-tag tag-high">HIGH THREAT</span>
+      <h3>Town Strides</h3>
+      <div class="comp-sub">Oakland wellness collective · weekly runs + wellness events · Black female-founded</div>
+      <div class="comp-stat-row"><div class="comp-stat"><div class="v">2024</div><div class="k">Born</div></div><div class="comp-stat"><div class="v">Weekly</div><div class="k">Cadence</div></div><div class="comp-stat"><div class="v">300+</div><div class="k">Peak Run</div></div></div>
+      <div class="comp-pills"><span class="pill">Runs</span><span class="pill">Wellness</span><span class="pill">Free/Accessible</span><span class="pill">Press Momentum</span></div>
+      <div class="comp-insight"><strong>Wellness threat because frequency wins.</strong> SF Fit Fest can be bigger and more premium, but Town Strides wins the everyday relationship through weekly touchpoints. OTT needs smaller recurring wellness moments so Fit Fest has a warm community before festival day.</div>
+    </div>
+
+    <div class="comp-card threat-med">
+      <span class="comp-tag tag-med">MED THREAT</span>
+      <h3>Tribe Collective</h3>
+      <div class="comp-sub">@trbcltv · social club for young Black professionals · invite/application energy</div>
+      <div class="comp-stat-row"><div class="comp-stat"><div class="v">Social</div><div class="k">Club</div></div><div class="comp-stat"><div class="v">Black YP</div><div class="k">Audience</div></div><div class="comp-stat"><div class="v">SF</div><div class="k">Market</div></div></div>
+      <div class="comp-pills"><span class="pill">Community</span><span class="pill">Young Black Professionals</span><span class="pill">Social Access</span><span class="pill">Belonging</span></div>
+      <div class="comp-insight"><strong>Closer community competitor than travel competitor.</strong> Based on the corrected handle, Tribe's visible positioning is around social club/community for young Black professionals. OTT's advantage is broader event IP, stronger experiential production, and travel/luxury range. The threat is if Tribe makes belonging feel clearer and more exclusive than OTT membership.</div>
+    </div>
+
+    <div class="comp-card threat-med">
+      <span class="comp-tag tag-med">LOW–MED THREAT</span>
+      <h3>FRNDSOnly</h3>
+      <div class="comp-sub">@frndsonly · social discovery + community events · Bay Area with broader city signals</div>
+      <div class="comp-stat-row"><div class="comp-stat"><div class="v">37K</div><div class="k">IG Followers*</div></div><div class="comp-stat"><div class="v">Events</div><div class="k">Model</div></div><div class="comp-stat"><div class="v">Friendship</div><div class="k">Positioning</div></div></div>
+      <div class="comp-pills"><span class="pill">Friend-making</span><span class="pill">Social Events</span><span class="pill">Community</span><span class="pill">City Drops</span></div>
+      <div class="comp-insight"><strong>Watch them for top-of-funnel attention.</strong> FRNDSOnly competes for people who want to meet people, not necessarily the full premium lifestyle OTT sells. OTT's advantage is more elevated production, sponsor credibility, stronger brand world, and wider programming across wellness, travel, professional development, and luxury social.</div>
+    </div>
+  </div>
+
+  <div style="background:rgba(184,150,62,0.08); border:1px solid rgba(184,150,62,0.25); border-radius:var(--radius); padding:1.5rem; margin-bottom:2rem;">
+    <div style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-bottom:0.5rem;">Data Note</div>
+    <div style="font-size:0.88rem; color:rgba(255,255,255,0.65);">Use live social numbers as directional, not permanent. Public follower counts change constantly and Instagram/TikTok access can be inconsistent. For the live dashboard, pull followers and engagement on a weekly schedule and timestamp every data point.</div>
+  </div>
+
+  <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:1.25rem; color: rgba(255,255,255,0.8);">Head-to-Head: Pillar Coverage</h3>
+  <div style="overflow-x:auto; background:var(--dark2); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:1.5rem;">
+    <table class="comp-table">
+      <thead><tr><th style="width:220px;">Pillar / Capability</th><th class="ott-col">OTT XP</th><th>Toasted Life</th><th>Town Strides</th><th>Tribe Collective</th><th>FRNDSOnly</th></tr></thead>
+      <tbody>
+        <tr><td>Luxury Social Experiences</td><td class="ott-col check">✓ Strong</td><td class="check">✓ Strong</td><td class="cross">✗</td><td class="partial">~ Social club</td><td class="partial">~ Social</td></tr>
+        <tr><td>Flagship Recurring IP</td><td class="ott-col check">✓ The Blend</td><td class="partial">~ Events</td><td class="check">✓ Weekly runs</td><td class="partial">~ Social club</td><td class="check">✓ Events</td></tr>
+        <tr><td>Wellness / Fitness</td><td class="ott-col partial">~ Fit Fest + emerging</td><td class="cross">✗</td><td class="check">✓ Core</td><td class="partial">~ Lifestyle/community</td><td class="cross">✗</td></tr>
+        <tr><td>Professional Development</td><td class="ott-col partial">~ Brunch & Build</td><td class="check">✓</td><td class="cross">✗</td><td class="partial">~ Networking</td><td class="cross">✗</td></tr>
+        <tr><td>Travel / Destination</td><td class="ott-col check">✓ Tahoe + international</td><td class="partial">~ Select/global moments</td><td class="cross">✗</td><td class="partial">~ Not core from visible profile</td><td class="cross">✗</td></tr>
+        <tr><td>Membership / Belonging</td><td class="ott-col partial">~ Plan exists; needs clarity</td><td class="partial">~ Join model</td><td class="check">✓ Free community</td><td class="check">✓ Core signal</td><td class="check">✓ Community signal</td></tr>
+        <tr><td>Owned Media</td><td class="ott-col cross">✗ Missing</td><td class="check">✓ Stronger</td><td class="partial">~ Social-first</td><td class="cross">✗ Unknown</td><td class="cross">✗ Unknown</td></tr>
+        <tr><td>Brand Partner Inventory</td><td class="ott-col check">✓ Strong</td><td class="check">✓ Strong</td><td class="partial">~ Wellness partners</td><td class="partial">~ Emerging</td><td class="partial">~ Emerging</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:1.5rem; color: rgba(255,255,255,0.8);">Brand Strength Radar — Strategic View</h3>
+    <div class="chart-wrap">
+      <div class="chart-canvas-wrap"><canvas id="radarChart" width="380" height="380"></canvas></div>
+      <div class="chart-legend">
+        <div style="font-size:0.8rem; color:rgba(255,255,255,0.4); margin-bottom:1.25rem; text-transform:uppercase; letter-spacing:1px; font-weight:700;">Dimensions Scored</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#B8963E"></div><div><div class="legend-label">OTT XP</div><div class="legend-sub">Strongest breadth; weakest owned media</div></div></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#EB5757"></div><div><div class="legend-label">Toasted Life</div><div class="legend-sub">Strong multi-city social/professional competitor</div></div></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#56CCF2"></div><div><div class="legend-label">Town Strides</div><div class="legend-sub">Wellness frequency + press momentum</div></div></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#6fcf97"></div><div><div class="legend-label">Tribe + FRNDSOnly</div><div class="legend-sub">Community/belonging pressure</div></div></div>
+        <div style="margin-top:1.5rem; padding:1rem; background:rgba(184,150,62,0.08); border-radius:8px; border:1px solid rgba(184,150,62,0.2);"><div style="font-size:0.75rem; color:var(--gold); font-weight:700; margin-bottom:0.5rem;">OTT's Winning Advantage</div><div style="font-size:0.8rem; color:rgba(255,255,255,0.6);">Breadth + premium production + cultural credibility. The danger is not quality. The danger is weak digital infrastructure and unclear membership packaging.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VISIBILITY -->
+<section id="visibility">
+  <div class="section-label"><span>Brand Visibility & Awareness</span></div>
+  <h2>Getting Seen — Beyond the Event</h2>
+  <p class="section-intro">OTT's biggest growth constraint isn't the quality of its events — it's how few people know they exist. A brand that only activates around events is invisible the other 29 days of the month. Here's the visibility playbook.</p>
+
+  <!-- Social comparison bars -->
+  <div style="background:var(--dark2); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:2rem; margin-bottom:3rem;">
+    <div style="font-size:0.8rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:1.5rem;">Audience Size Snapshot — Use Live Pulls Where Possible</div>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">OTT XP</div>
+        <div class="bar-track"><div class="bar-fill bar-ott" id="b-ott" style="width:0%">11K</div></div>
+        <div class="bar-val">11K</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Toasted Life</div>
+        <div class="bar-track"><div class="bar-fill bar-comp" id="b-tl" style="width:0%">~35K</div></div>
+        <div class="bar-val">~35K</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Town Strides</div>
+        <div class="bar-track"><div class="bar-fill bar-comp" id="b-ts" style="width:0%">~22K</div></div>
+        <div class="bar-val">~22K</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">FRNDSOnly</div>
+        <div class="bar-track"><div class="bar-fill bar-comp" id="b-tc" style="width:0%">37K*</div></div>
+        <div class="bar-val">37K*</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">OTT Goal (18mo)</div>
+        <div class="bar-track"><div class="bar-fill" id="b-goal" style="width:0%; background:linear-gradient(90deg,rgba(184,150,62,0.4),rgba(184,150,62,0.2)); border:1px dashed rgba(184,150,62,0.5)">50K</div></div>
+        <div class="bar-val">50K</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recs-grid">
+
+    <div class="rec-card">
+      <div class="rec-num">01 — OWNED MEDIA</div>
+      <h3>🗞️ Launch "The OTT Edit" Newsletter</h3>
+      <ul>
+        <li>Monthly email to all past event attendees + sign-ups</li>
+        <li>Content: upcoming events, member spotlights, lifestyle picks, city guides</li>
+        <li>Target: 5,000 subscribers in 6 months; 15,000 in 18 months</li>
+        <li>Tool: Mailchimp or Beehiiv (free to start)</li>
+        <li>Convert every event RSVP to an email subscriber automatically</li>
+      </ul>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">02 — VIDEO CONTENT</div>
+      <h3>🎬 YouTube Channel + Reels Strategy</h3>
+      <ul>
+        <li>YouTube: event recaps, travel vlogs, Brunch & Build fireside chats</li>
+        <li>Instagram Reels: 3–4x per week — previews, BTS, community moments</li>
+        <li>TikTok: repurpose Reels content; short-form "day in the life at OTT"</li>
+        <li>Travel content = highest aspiration driver and biggest untapped asset</li>
+        <li>Hire or partner with a content creator for 1 event/trip per quarter</li>
+      </ul>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">03 — PRESS & MEDIA</div>
+      <h3>📰 Earn the Coverage You Deserve</h3>
+      <ul>
+        <li>Toasted Life has Forbes. Town Strides has KQED + NBC in 2 years. OTT has 7 years and no major press.</li>
+        <li>Target: KQED Arts, SFGate, SFGATE, Blavity, Essence, The Root</li>
+        <li>Story angles: 7-year anniversary story, Black-owned experiential brand, Juneteenth series</li>
+        <li>Develop a press kit with brand stats, event photos, founder story</li>
+        <li>Consider a PR retainer or freelance publicist for 3–6 months</li>
+      </ul>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">04 — COMMUNITY PLATFORM</div>
+      <h3>💬 Build a Year-Round Digital Home</h3>
+      <ul>
+        <li>Launch a free Discord or Geneva community — members stay connected between events</li>
+        <li>Channels: #upcoming-events, #travel-planning, #members-wins, #music-vibes</li>
+        <li>Town Strides has Discord + Strava + Spotify — all free tools OTT isn't using</li>
+        <li>Members-only tier on Discord (linked to paid membership) creates layered value</li>
+        <li>Community platform reduces Instagram dependency and builds owned audience</li>
+      </ul>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">05 — SPOTIFY & AUDIO</div>
+      <h3>🎵 The Blend Playlist Series</h3>
+      <ul>
+        <li>Launch an official OTT Spotify playlist for every Blend event</li>
+        <li>Town Strides has a Spotify playlist — so should The Blend</li>
+        <li>Monthly playlist = passive brand touchpoint + discovery tool</li>
+        <li>Cross-promote: "Listen to this month's Blend playlist before the event"</li>
+        <li>Long-term: explore a podcast with artist features + community conversations</li>
+      </ul>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">06 — PARTNERSHIPS</div>
+      <h3>🤝 Activate for Reach, Not Just Revenue</h3>
+      <ul>
+        <li>Co-market with complementary Bay Area brands (coffee shops, studios, restaurants)</li>
+        <li>Explore creator/influencer partnerships — micro-influencers in the Black YP space</li>
+        <li>Partner with major employers for corporate team event packages</li>
+        <li>Collaborate with universities and MBA programs for Brunch & Build</li>
+        <li>Use partner logos and co-branding to signal credibility on social</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DATA COMMAND CENTER -->
+<section id="data">
+  <div class="section-label"><span>Data Command Center</span></div>
+  <h2>From Brand Deck to Live Growth Dashboard</h2>
+  <p class="section-intro">Gabe’s SweatPals ticketing dashboard changes the strategy. We now have hard signals: lifetime revenue, ticket volume, sell-through, show-up rates, ad efficiency, content winners, and event-level gaps. The next version of OTT’s brand dashboard should use this data every week to decide what to post, where to spend, which pillars deserve investment, and which events are underperforming.</p>
+
+  <div class="cards-grid" style="margin-bottom:2.5rem;">
+    <div class="card"><div class="card-icon">💰</div><h3>$217,989 Lifetime Revenue</h3><p>Ticketing has already proven meaningful revenue. The opportunity is turning one-off event sales into recurring membership, sponsor renewals, merch, and travel revenue.</p></div>
+    <div class="card"><div class="card-icon">🎟️</div><h3>4,901 Lifetime Tickets</h3><p>OTT has real demand. The issue is not whether people will show up. The issue is building a repeatable growth engine around the demand that already exists.</p></div>
+    <div class="card"><div class="card-icon">✅</div><h3>72% Paid Show-Up Rate</h3><p>Paid attendees show up at a healthy rate. Free attendees show up at 48%, so free tickets should be used strategically, not casually.</p></div>
+    <div class="card"><div class="card-icon">📣</div><h3>Content Can Spike Hard</h3><p>Top content has reached 347K+ views on IG and 94K+ views on TikTok. The play is to systemize what already breaks through.</p></div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin-bottom:2.5rem;">
+    <div style="background:var(--dark2); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:2rem;">
+      <div style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-bottom:1.25rem;">Upcoming Event Pipeline</div>
+      <canvas id="pipelineChart" height="230"></canvas>
+    </div>
+    <div style="background:var(--dark2); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:2rem;">
+      <div style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-bottom:1.25rem;">Best Revenue Events</div>
+      <canvas id="revenueLeadersChart" height="230"></canvas>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin-bottom:2.5rem;">
+    <div style="background:var(--dark2); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:2rem;">
+      <div style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-bottom:1.25rem;">Ticket Volume Leaders</div>
+      <canvas id="ticketLeadersChart" height="230"></canvas>
+    </div>
+    <div style="background:var(--dark2); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:2rem;">
+      <div style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-bottom:1.25rem;">Paid Show-Up Benchmark</div>
+      <canvas id="showupChart" height="230"></canvas>
+    </div>
+  </div>
+
+  <div style="background:var(--dark2); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:2rem; margin-bottom:2.5rem;">
+    <div style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-bottom:1.5rem;">What the Data Says Right Now</div>
+    <table class="comp-table">
+      <thead><tr><th>Signal</th><th>Actual Data</th><th>Strategic Meaning</th><th>Recommendation</th></tr></thead>
+      <tbody>
+        <tr><td>SF Fit Fest</td><td class="ott-col">153 / 1,000 sold · forecast ~428</td><td>Big awareness ambition, but current pace does not support a 1,000-person target without a heavier paid + creator push.</td><td>Scale paid spend toward the recommended pace, push coach/community collabs, and seed UGC immediately.</td></tr>
+        <tr><td>Juneteenth Blend</td><td class="ott-col">0 / 500 sold · 27 days out</td><td>The event is too important to stay in teaser mode. It needs urgent conversion content and partner amplification.</td><td>Daily sales content, Hennessy/VIP Lounge visuals, DJ/social proof, creator invites, and retargeting.</td></tr>
+        <tr><td>The Blend</td><td class="ott-col">Multiple 368–624 ticket events</td><td>This is the strongest repeatable event IP in the portfolio. It should be treated like a product line, not a one-off party.</td><td>Build a Blend content system: playlist, city drops, recap reels, member perks, merch, and sponsor packages.</td></tr>
+        <tr><td>Tahoe Ski Weekend</td><td class="ott-col">$31,477 revenue · 193 tickets</td><td>Travel is high-value even with lower ticket volume. This is premium community, not mass attendance.</td><td>Package travel as a member/status benefit and capture better long-form content next time.</td></tr>
+        <tr><td>Earned Media / UGC</td><td class="ott-col">Repeated gaps: no external posts for many events</td><td>OTT is not extracting enough organic reach from attendees, creators, DJs, coaches, and partners.</td><td>Add a creator seeding checklist to every event and request collab posts before, during, and after.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-bottom:2.5rem;">
+    <div class="rec-card">
+      <div class="rec-num">DATA MOVE 01</div>
+      <h3>Build an Event Scorecard</h3>
+      <ul>
+        <li>Every event gets a score: revenue, tickets, show-up rate, CPA, reach, UGC, sponsor value, repeat attendees.</li>
+        <li>Use the score to decide which events scale, pause, reposition, or need better marketing.</li>
+        <li>Do not let vibes alone decide the 2026 calendar. The data is now good enough to be bossy.</li>
+      </ul>
+    </div>
+    <div class="rec-card">
+      <div class="rec-num">DATA MOVE 02</div>
+      <h3>Make The Blend the Growth Engine</h3>
+      <ul>
+        <li>The Blend consistently sells hundreds of tickets and creates the most scalable cultural IP.</li>
+        <li>Use it to drive membership, sponsor proof, playlist growth, merch drops, and city expansion.</li>
+        <li>Track Blend by city: Oakland, SF, San Jose, Sacramento, Tahoe, then compare CAC + revenue.</li>
+      </ul>
+    </div>
+    <div class="rec-card">
+      <div class="rec-num">DATA MOVE 03</div>
+      <h3>Separate Mass Events vs Premium Events</h3>
+      <ul>
+        <li>Fit Fest = reach, sponsorship, and partner ecosystem.</li>
+        <li>Travel = premium revenue, membership value, and brand aspiration.</li>
+        <li>The Blend = repeatable attendance and cultural flywheel.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="background:rgba(184,150,62,0.08); border:1px solid rgba(184,150,62,0.25); border-radius:var(--radius); padding:2rem; margin-bottom:2.5rem;">
+    <div style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); margin-bottom:0.75rem;">Live Analytics Integration</div>
+    <h3 style="font-size:1.1rem; margin-bottom:0.75rem;">Yes — Gabe’s dashboard proves this can be GitHub-powered.</h3>
+    <p style="font-size:0.9rem; color:rgba(255,255,255,0.62); margin-bottom:1.25rem;">Recommended setup: keep Gabe’s analytics as the live ticketing layer, connect this brand strategy dashboard to the same data sources, and host both from GitHub Pages or Vercel. This turns OTT’s strategy into a living command center instead of a static PDF.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1rem;">
+      <div><strong style="color:var(--gold);">GitHub Pages</strong><p style="font-size:0.82rem; color:rgba(255,255,255,0.55);">Simple, free hosting for a shareable dashboard URL.</p></div>
+      <div><strong style="color:var(--gold);">SweatPals Data</strong><p style="font-size:0.82rem; color:rgba(255,255,255,0.55);">Ticket sales, revenue, capacity, show-up rates, and pacing.</p></div>
+      <div><strong style="color:var(--gold);">Meta/TikTok/Apify</strong><p style="font-size:0.82rem; color:rgba(255,255,255,0.55);">Follower trends, views, engagement, creator posts, and content winners.</p></div>
+      <div><strong style="color:var(--gold);">Google Sheets / Airtable</strong><p style="font-size:0.82rem; color:rgba(255,255,255,0.55);">Manual inputs for sponsors, membership perks, partner commitments, and UGC tracking.</p></div>
+    </div>
+    <div style="margin-top:1.5rem;">
+      <a href="https://gabrielgalarza-create.github.io/ott-ticketing-analytics/" target="_blank" style="display:inline-block; color:var(--dark); background:var(--gold); padding:0.65rem 1rem; border-radius:999px; font-weight:800; font-size:0.8rem; text-decoration:none; letter-spacing:0.5px;">Open Gabe’s Live Ticketing Dashboard ↗</a>
+    </div>
+  </div>
+
+  <div style="background:var(--dark2); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:2rem;">
+    <div style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-bottom:1.5rem;">North Star Metrics — Updated with Real Data</div>
+    <table class="comp-table">
+      <thead><tr><th>Metric</th><th>Current / Benchmark</th><th>Why It Matters</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td>Paid Show-Up Rate</td><td class="ott-col">72% historical</td><td>Best signal for actual attendance planning and venue confidence.</td><td>Ops</td></tr>
+        <tr><td>Free Show-Up Rate</td><td class="ott-col">48% historical</td><td>Free tickets should not be counted 1:1 for attendance projections.</td><td>Ops</td></tr>
+        <tr><td>CPA by Event</td><td class="ott-col">Fit Fest now $5.14; historic median $7.27</td><td>Shows whether paid ads are efficient enough to scale.</td><td>Marketing</td></tr>
+        <tr><td>Revenue per Event</td><td class="ott-col">Top known: Yacht Party $53,550</td><td>Shows which event formats deserve more production and sponsor focus.</td><td>Leadership</td></tr>
+        <tr><td>UGC / External Posts</td><td class="ott-col">Repeatedly underbuilt</td><td>Most obvious missed growth lever. People attend, but OTT is not forcing enough digital proof.</td><td>Marketing + Talent</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MERCH -->
+<section id="merch">
+  <div class="section-label"><span>Merch Strategy</span></div>
+  <h2>Wear the Brand. Build the Movement.</h2>
+  <p class="section-intro">Merch is the most underutilized visibility tool in OTT's arsenal. Every person wearing OTT gear is a walking ad. Done right, merch creates revenue, reinforces identity, and turns community members into brand ambassadors — at no additional marketing cost.</p>
+
+  <!-- Merch Principles -->
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.25rem; margin-bottom:3rem;">
+    <div style="background:rgba(184,150,62,0.08); border:1px solid rgba(184,150,62,0.25); border-radius:var(--radius); padding:1.5rem;">
+      <div style="font-size:0.75rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem;">Principle 1</div>
+      <div style="font-weight:700; margin-bottom:0.4rem;">Quality Over Volume</div>
+      <div style="font-size:0.85rem; color:rgba(255,255,255,0.55);">OTT is a premium brand. Cheap merch hurts the brand more than no merch. Launch with 3–5 hero items done exceptionally well — not 20 mediocre ones.</div>
+    </div>
+    <div style="background:rgba(184,150,62,0.08); border:1px solid rgba(184,150,62,0.25); border-radius:var(--radius); padding:1.5rem;">
+      <div style="font-size:0.75rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem;">Principle 2</div>
+      <div style="font-weight:700; margin-bottom:0.4rem;">Event-Anchored Drops</div>
+      <div style="font-size:0.85rem; color:rgba(255,255,255,0.55);">Release limited merch drops tied to events (The Blend Juneteenth collab, Fit Fest summer edition). Scarcity creates desire. Event merch becomes a collectible.</div>
+    </div>
+    <div style="background:rgba(184,150,62,0.08); border:1px solid rgba(184,150,62,0.25); border-radius:var(--radius); padding:1.5rem;">
+      <div style="font-size:0.75rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem;">Principle 3</div>
+      <div style="font-weight:700; margin-bottom:0.4rem;">Members-First Access</div>
+      <div style="font-size:0.85rem; color:rgba(255,255,255,0.55);">Give members early or exclusive access to merch drops. Merch becomes a membership benefit that drives sign-ups. VIP members get their name on select items.</div>
+    </div>
+  </div>
+
+  <!-- Merch Items -->
+  <div class="merch-grid">
+    <div class="merch-item">
+      <span class="merch-icon">👕</span>
+      <h3>The OTT Tee</h3>
+      <p>Heavyweight cotton, minimal OTT mark on chest. Black and cream colorways. The essential wearable identity piece.</p>
+      <span class="merch-price">$45–$65 retail</span>
+    </div>
+    <div class="merch-item">
+      <span class="merch-icon">🧢</span>
+      <h3>The Blend Cap</h3>
+      <p>Coffee-toned 6-panel cap with "The Blend" embroidery. Designed to match the event's coffee outfit theme — wearable before and after.</p>
+      <span class="merch-price">$35–$50 retail</span>
+    </div>
+    <div class="merch-item">
+      <span class="merch-icon">🧥</span>
+      <h3>OTT Crewneck</h3>
+      <p>Premium fleece with "Over The Top" in gold embroidery. The aspirational community piece — gold thread on black = luxury. Members get first access.</p>
+      <span class="merch-price">$85–$110 retail</span>
+    </div>
+    <div class="merch-item">
+      <span class="merch-icon">🎽</span>
+      <h3>Fit Fest Performance Set</h3>
+      <p>Event-specific activewear: tank + shorts set with "SF Fit Fest 2026" branding. Sold at the event and online pre-order. Doubles as race-day gear.</p>
+      <span class="merch-price">$60–$80 set</span>
+    </div>
+    <div class="merch-item">
+      <span class="merch-icon">🛍️</span>
+      <h3>OTT Tote Bag</h3>
+      <p>Heavy canvas tote with gold OTT logo. Gifted to Founding Members. Sold as an affordable entry-point merch item — great for event day carry.</p>
+      <span class="merch-price">$25–$35 retail</span>
+    </div>
+    <div class="merch-item">
+      <span class="merch-icon">🍵</span>
+      <h3>The Blend Coffee Mug</h3>
+      <p>Ceramic 14oz mug — "The Blend · Over The Top." The perfect merch for a coffee-themed event. Seasonal collab with a local roaster for co-branded edition.</p>
+      <span class="merch-price">$28–$38 retail</span>
+    </div>
+    <div class="merch-item">
+      <span class="merch-icon">✈️</span>
+      <h3>Travel Edition Capsule</h3>
+      <p>Limited drops for each destination trip: city-specific hat, luggage tag, notebook. Only available to trip attendees — makes each trip a collectible experience.</p>
+      <span class="merch-price">Trip-exclusive</span>
+    </div>
+    <div class="merch-item">
+      <span class="merch-icon">🏷️</span>
+      <h3>Founding Member Kit</h3>
+      <p>Exclusive welcome package for Founding Members: crewneck + tote + mug + custom card. A physical representation of belonging — makes membership feel real.</p>
+      <span class="merch-price">Members-only</span>
+    </div>
+  </div>
+
+  <!-- Merch Strategy Details -->
+  <div style="margin-top:2.5rem; background:var(--dark2); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:2rem;">
+    <h3 style="font-size:1rem; font-weight:700; margin-bottom:1.5rem; color:var(--white);">📦 How to Launch: 3-Phase Merch Rollout</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.25rem;">
+      <div>
+        <div style="font-size:0.7rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem;">Phase 1 — Now</div>
+        <div style="font-size:0.85rem; color:rgba(255,255,255,0.7); font-weight:600; margin-bottom:0.4rem;">Soft Launch (Low Risk)</div>
+        <div style="font-size:0.82rem; color:rgba(255,255,255,0.5);">Use print-on-demand (Printful, Printify) to test designs with zero upfront inventory. The OTT Tee + Tote. Link from Instagram bio and email.</div>
+      </div>
+      <div>
+        <div style="font-size:0.7rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem;">Phase 2 — Q3 2026</div>
+        <div style="font-size:0.85rem; color:rgba(255,255,255,0.7); font-weight:600; margin-bottom:0.4rem;">Event-Tied Drop</div>
+        <div style="font-size:0.82rem; color:rgba(255,255,255,0.5);">Fit Fest Summer Edition activewear drop. Pre-sell 2 weeks before the event. Limited units. Partner with a local screen printer for quality control.</div>
+      </div>
+      <div>
+        <div style="font-size:0.7rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem;">Phase 3 — Q4 2026</div>
+        <div style="font-size:0.85rem; color:rgba(255,255,255,0.7); font-weight:600; margin-bottom:0.4rem;">Full Shop + Member Kit</div>
+        <div style="font-size:0.82rem; color:rgba(255,255,255,0.5);">Launch OTT web shop. Introduce Founding Member welcome kit. Seasonal capsule collections (Holiday 2026). Collab with a Bay Area Black-owned clothing brand.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-label"><span>Growth Roadmap</span></div>
+  <h2>From Events Company to Community Platform</h2>
+  <p class="section-intro">OTT's evolution happens in three phases: infrastructure (now), scale (2026–2027), and platform (2027+). Each phase builds on the last.</p>
+
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+    <div class="roadmap">
+
+      <div class="roadmap-item">
+        <div class="roadmap-label">NOW → Q2 2026</div>
+        <h3>Activate the Foundation</h3>
+        <p>Launch tiered membership with pricing. Build email newsletter. Redesign membership page. Launch print-on-demand merch. Set up Discord community.</p>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-label">Q3 2026</div>
+        <h3>Build the Content Engine</h3>
+        <p>Launch YouTube with first 3 videos. Commit to 3–4 Reels/week. Quarterly Brunch & Build cadence. Expand The Blend to Los Angeles pilot. Fit Fest Summer Edition merch drop.</p>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-label">Q4 2026</div>
+        <h3>Travel Content & Press Push</h3>
+        <p>Film first professional travel documentary. Submit for press coverage (KQED, Blavity, Essence). Launch OTT web shop. Founding Member kits ship. Corporate DEI partnership pilot.</p>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-label">Q1 2027</div>
+        <h3>New York City Launch</h3>
+        <p>The Blend NYC debut. Evaluate LA Blend results and commit to quarterly. Reach 500+ paying members across tiers. Launch OTT podcast season 1.</p>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-label">2027+</div>
+        <h3>Platform Scale</h3>
+        <p>3–5 city Blend series. Fit Fest as multi-day festival. Annual gala (The Affair) as national event IP with sponsorship packages. 50K Instagram + 15K email subscribers.</p>
+      </div>
+
+    </div>
+
+    <!-- Opportunity chart -->
+    <div>
+      <div style="background:var(--dark2); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius); padding:2rem; margin-bottom:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-bottom:1.25rem;">Revenue Potential by Stream</div>
+        <canvas id="barChart" height="220"></canvas>
+      </div>
+      <div style="background:rgba(184,150,62,0.08); border:1px solid rgba(184,150,62,0.25); border-radius:var(--radius); padding:1.5rem;">
+        <div style="font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); margin-bottom:0.75rem;">The 18-Month Vision</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div><div style="font-size:1.5rem; font-weight:900; color:var(--gold);">50K</div><div style="font-size:0.72rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:1px;">IG Followers</div></div>
+          <div><div style="font-size:1.5rem; font-weight:900; color:var(--gold);">500+</div><div style="font-size:0.72rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:1px;">Paying Members</div></div>
+          <div><div style="font-size:1.5rem; font-weight:900; color:var(--gold);">3</div><div style="font-size:0.72rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:1px;">Cities Active</div></div>
+          <div><div style="font-size:1.5rem; font-weight:900; color:var(--gold);">15K</div><div style="font-size:0.72rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:1px;">Email Subscribers</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRIORITIES -->
+<section id="priorities">
+  <div class="section-label"><span>Action Priorities</span></div>
+  <h2>What to Do First</h2>
+  <p class="section-intro">Ranked by impact and speed to implement. P1 items can be live within 30–60 days with minimal investment.</p>
+
+  <div class="priority-list">
+    <div class="priority-item">
+      <div class="priority-badge-wrap"><div class="p-badge p1">P1</div></div>
+      <div class="priority-content">
+        <h4>Launch Tiered Membership with Pricing</h4>
+        <p>Rebuild the membership page with Community ($25/mo), VIP ($75/mo), and Founding Member ($150/mo, capped at 200) tiers. Clear benefits. Clear CTA. This is the single highest-ROI move available.</p>
+      </div>
+      <div class="priority-meta"><div class="timeline">30 days</div><span class="impact impact-high">HIGH</span></div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-badge-wrap"><div class="p-badge p1">P1</div></div>
+      <div class="priority-content">
+        <h4>Start "The OTT Edit" Newsletter</h4>
+        <p>Capture every event attendee into an email list. Launch a monthly newsletter. Email is the only audience channel you fully own — Instagram can take followers away; email can't be taken.</p>
+      </div>
+      <div class="priority-meta"><div class="timeline">30 days</div><span class="impact impact-high">HIGH</span></div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-badge-wrap"><div class="p-badge p1">P1</div></div>
+      <div class="priority-content">
+        <h4>Launch Merch — Phase 1 (Print-on-Demand)</h4>
+        <p>OTT Tee + Tote on Printful/Printify. Zero inventory risk. Link from bio and email. Every person wearing OTT is a walking awareness campaign.</p>
+      </div>
+      <div class="priority-meta"><div class="timeline">30 days</div><span class="impact impact-high">HIGH</span></div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-badge-wrap"><div class="p-badge p2">P2</div></div>
+      <div class="priority-content">
+        <h4>Instagram Reels + YouTube Launch</h4>
+        <p>3–4 Reels per week (event previews, BTS, member features). YouTube: start with a travel vlog from the next trip + Brunch & Build recordings. Video is the fastest path to follower growth.</p>
+      </div>
+      <div class="priority-meta"><div class="timeline">60–90 days</div><span class="impact impact-high">HIGH</span></div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-badge-wrap"><div class="p-badge p2">P2</div></div>
+      <div class="priority-content">
+        <h4>Expand The Blend to Los Angeles</h4>
+        <p>Partner with an LA-based host or community figure. Run a Q3 2026 pilot. The Blend is OTT's most replicable, low-overhead format — LA is the obvious first expansion market.</p>
+      </div>
+      <div class="priority-meta"><div class="timeline">Q3 2026</div><span class="impact impact-high">HIGH</span></div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-badge-wrap"><div class="p-badge p2">P2</div></div>
+      <div class="priority-content">
+        <h4>Brunch & Build — Quarterly Cadence + Recording</h4>
+        <p>Commit to 4x per year. Develop a speaker pipeline. Record and publish every fireside chat. This is OTT's most distinctive differentiator from pure social brands — and it needs to be visible.</p>
+      </div>
+      <div class="priority-meta"><div class="timeline">Q3 2026</div><span class="impact impact-high">HIGH</span></div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-badge-wrap"><div class="p-badge p2">P2</div></div>
+      <div class="priority-content">
+        <h4>The Blend Spotify Playlist</h4>
+        <p>Create a monthly playlist for every Blend event. Town Strides (2 years old) already has a Spotify playlist. A free tool OTT isn't using — easy win for brand touchpoints between events.</p>
+      </div>
+      <div class="priority-meta"><div class="timeline">Immediate</div><span class="impact impact-med">MED</span></div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-badge-wrap"><div class="p-badge p3">P3</div></div>
+      <div class="priority-content">
+        <h4>Travel Content Investment — Film the Next Trip</h4>
+        <p>OTT's travel experiences are its most powerful differentiator and its most invisible asset. Hire a content creator for one trip and produce 10+ shareable clips. Turn aspiration into new members.</p>
+      </div>
+      <div class="priority-meta"><div class="timeline">Q4 2026</div><span class="impact impact-high">HIGH</span></div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-badge-wrap"><div class="p-badge p3">P3</div></div>
+      <div class="priority-content">
+        <h4>Press Outreach — Earn the Coverage</h4>
+        <p>Target KQED Arts, Blavity, SFGate, Essence. Story angles: 7-year OTT story, Black women-led luxury experiences, Juneteenth Blend series. Town Strides got KQED + NBC in 2 years. OTT has a stronger story.</p>
+      </div>
+      <div class="priority-meta"><div class="timeline">Q4 2026</div><span class="impact impact-high">HIGH</span></div>
+    </div>
+
+    <div class="priority-item">
+      <div class="priority-badge-wrap"><div class="p-badge p3">P3</div></div>
+      <div class="priority-content">
+        <h4>Activate or Retire Workshops Pillar</h4>
+        <p>It's in your brand copy but has zero active programming. Build a real series with format + cadence + promotion, or officially fold it into Brunch & Build. Dead pillars hurt brand credibility.</p>
+      </div>
+      <div class="priority-meta"><div class="timeline">90 days</div><span class="impact impact-med">MED</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">OVER THE TOP XP</div>
+  <p>Strategic Brand Analysis · May 2026 · Confidential</p>
+  <p style="margin-top:0.5rem;">A community of young professionals connecting through events, destination trips, and workshops.</p>
+  <p style="margin-top:1.5rem; font-size:0.75rem;">Competitive data: Toasted Life, Town Strides, Tribe Collective, FRNDSOnly, public social profiles, and OTT internal planning — May 2026.</p>
+</footer>
+
+<script>
+// Animate bars on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const bars = [
+      { id: 'b-ott', w: '11' },
+      { id: 'b-tl', w: '35' },
+      { id: 'b-ts', w: '22' },
+      { id: 'b-tc', w: '37' },
+      { id: 'b-goal', w: '50' }
+    ];
+    bars.forEach(b => {
+      const el = document.getElementById(b.id);
+      if (el) el.style.width = (parseInt(b.w) / 50 * 95) + '%';
+    });
+  }, 400);
+});
+
+// RADAR CHART
+const radarCtx = document.getElementById('radarChart').getContext('2d');
+new Chart(radarCtx, {
+  type: 'radar',
+  data: {
+    labels: ['Brand Identity', 'Event Quality', 'Digital Reach', 'Membership Model', 'Geographic Scale', 'Content/Media', 'Community Depth'],
+    datasets: [
+      {
+        label: 'OTT XP',
+        data: [9, 9, 3, 2, 3, 2, 8],
+        backgroundColor: 'rgba(184,150,62,0.15)',
+        borderColor: '#B8963E',
+        borderWidth: 2,
+        pointBackgroundColor: '#B8963E',
+        pointRadius: 4
+      },
+      {
+        label: 'Toasted Life',
+        data: [7, 7, 7, 5, 8, 7, 7],
+        backgroundColor: 'rgba(235,87,87,0.08)',
+        borderColor: 'rgba(235,87,87,0.7)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(235,87,87,0.8)',
+        pointRadius: 3
+      },
+      {
+        label: 'Town Strides',
+        data: [6, 5, 8, 2, 3, 5, 8],
+        backgroundColor: 'rgba(86,204,242,0.08)',
+        borderColor: 'rgba(86,204,242,0.6)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(86,204,242,0.8)',
+        pointRadius: 3
+      },
+      {
+        label: 'Tribe Collective',
+        data: [6, 6, 5, 9, 8, 4, 7],
+        backgroundColor: 'rgba(111,207,151,0.08)',
+        borderColor: 'rgba(111,207,151,0.6)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(111,207,151,0.8)',
+        pointRadius: 3
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false }
+    },
+    scales: {
+      r: {
+        min: 0, max: 10,
+        ticks: {
+          display: false,
+          stepSize: 2
+        },
+        grid: { color: 'rgba(255,255,255,0.08)' },
+        angleLines: { color: 'rgba(255,255,255,0.08)' },
+        pointLabels: {
+          color: 'rgba(255,255,255,0.55)',
+          font: { size: 11, weight: '600' }
+        }
+      }
+    }
+  }
+});
+
+// BAR CHART
+const barCtx = document.getElementById('barChart').getContext('2d');
+new Chart(barCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Event Tickets', 'Membership', 'Partnerships', 'Merch', 'Travel', 'Digital'],
+    datasets: [
+      {
+        label: 'Current (est.)',
+        data: [70, 5, 20, 0, 15, 0],
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        borderRadius: 6
+      },
+      {
+        label: 'Potential (18mo)',
+        data: [85, 45, 35, 15, 25, 10],
+        backgroundColor: 'rgba(184,150,62,0.7)',
+        borderRadius: 6
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: 'rgba(255,255,255,0.6)',
+          font: { size: 11 }
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 10 } },
+        grid: { display: false }
+      },
+      y: {
+        ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 10 }, callback: v => v + '%' },
+        grid: { color: 'rgba(255,255,255,0.06)' },
+        title: { display: true, text: '% of Revenue Mix', color: 'rgba(255,255,255,0.3)', font: { size: 10 } }
+      }
+    }
+  }
+});
+
+
+
+// DATA COMMAND CENTER CHARTS
+const pipelineEl = document.getElementById('pipelineChart');
+if (pipelineEl) {
+  new Chart(pipelineEl.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Juneteenth Blend', 'SF Fit Fest'],
+      datasets: [
+        { label: 'Sold', data: [0, 153], backgroundColor: 'rgba(184,150,62,0.8)', borderRadius: 6 },
+        { label: 'Target / Capacity', data: [500, 1000], backgroundColor: 'rgba(255,255,255,0.14)', borderRadius: 6 }
+      ]
+    },
+    options: { responsive:true, plugins:{ legend:{ labels:{ color:'rgba(255,255,255,0.6)', font:{size:10} } } }, scales:{ x:{ ticks:{ color:'rgba(255,255,255,0.55)' }, grid:{ display:false } }, y:{ ticks:{ color:'rgba(255,255,255,0.4)' }, grid:{ color:'rgba(255,255,255,0.06)' } } } }
+  });
+}
+
+const revenueLeadersEl = document.getElementById('revenueLeadersChart');
+if (revenueLeadersEl) {
+  new Chart(revenueLeadersEl.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Yacht Party', 'Tahoe', 'Blend Oakland', 'Blend Mar 28', 'Black Joy Blend'],
+      datasets: [{ label: 'Revenue', data: [53550, 31477, 20200, 19375, 16300], backgroundColor: 'rgba(184,150,62,0.75)', borderRadius: 6 }]
+    },
+    options: { indexAxis:'y', responsive:true, plugins:{ legend:{display:false} }, scales:{ x:{ ticks:{ color:'rgba(255,255,255,0.45)', callback:v=>'$'+(v/1000)+'K' }, grid:{ color:'rgba(255,255,255,0.06)' } }, y:{ ticks:{ color:'rgba(255,255,255,0.6)' }, grid:{display:false} } } }
+  });
+}
+
+const ticketLeadersEl = document.getElementById('ticketLeadersChart');
+if (ticketLeadersEl) {
+  new Chart(ticketLeadersEl.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Blend Oakland', 'Blend Mar 28', 'Black Joy Blend', 'Yacht Party', 'W SF Blend'],
+      datasets: [{ label: 'Tickets Sold', data: [624, 566, 498, 444, 401], backgroundColor: 'rgba(212,168,67,0.75)', borderRadius: 6 }]
+    },
+    options: { responsive:true, plugins:{ legend:{display:false} }, scales:{ x:{ ticks:{ color:'rgba(255,255,255,0.55)' }, grid:{display:false} }, y:{ ticks:{ color:'rgba(255,255,255,0.4)' }, grid:{ color:'rgba(255,255,255,0.06)' } } } }
+  });
+}
+
+const showupEl = document.getElementById('showupChart');
+if (showupEl) {
+  new Chart(showupEl.getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Paid Show-Up', 'Paid No-Show', 'Free Show-Up', 'Free No-Show'],
+      datasets: [{ data: [72,28,48,52], backgroundColor:['#B8963E','rgba(255,255,255,0.12)','#56CCF2','rgba(255,255,255,0.08)'], borderColor:'#1A1A1A', borderWidth:2 }]
+    },
+    options: { responsive:true, plugins:{ legend:{ position:'bottom', labels:{ color:'rgba(255,255,255,0.6)', font:{size:10} } } } }
+  });
+}
+
+// Smooth scroll nav
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Active nav
+const sections = document.querySelectorAll('section[id]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
